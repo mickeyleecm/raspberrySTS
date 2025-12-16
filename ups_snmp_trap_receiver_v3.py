@@ -3601,31 +3601,31 @@ class UPSTrapReceiver:
                     
                     self.logger.info(f"[BUTTON] Mute button pressed - BUZZER_MUTED changed from {old_value} to {new_value} (config.py updated successfully)")
                     
-                    # Handle buzzer based on new mute state
+                    # Handle buzzer based on new mute state and current alarm status
+                    # Reload ALARM_STATUS from config to get latest value
+                    try:
+                        import importlib.util
+                        config_path = Path(__file__).parent / 'config.py'
+                        if config_path.exists():
+                            spec = importlib.util.spec_from_file_location("ups_config", config_path)
+                            ups_config = importlib.util.module_from_spec(spec)
+                            spec.loader.exec_module(ups_config)
+                            if hasattr(ups_config, 'ALARM_STATUS'):
+                                self.alarm_status = ups_config.ALARM_STATUS
+                    except:
+                        pass
+                    
+                    # Update buzzer state based on BOTH buzzer_muted AND alarm_status
+                    # Buzzer should be enabled ONLY when: (1) not muted AND (2) alarm is active
                     if new_value:
-                        # Muted (BUZZER_MUTED = True): disable buzzer
+                        # Muted (BUZZER_MUTED = True): disable buzzer regardless of alarm state
                         if self.panel_led_controller and hasattr(self.panel_led_controller, 'disable_buzzer'):
                             self.panel_led_controller.disable_buzzer()
-                            self.logger.info("Buzzer disabled (muted)")
+                            self.logger.info(f"Buzzer disabled (muted) - ALARM_STATUS={self.alarm_status}")
                     else:
-                        # Unmuted (BUZZER_MUTED = False): 
-                        # If BUZZER_MUTED changed from True to False (unmuting) AND ALARM_STATUS is True, enable buzzer
-                        # Reload ALARM_STATUS from config to get latest value
-                        try:
-                            import importlib.util
-                            config_path = Path(__file__).parent / 'config.py'
-                            if config_path.exists():
-                                spec = importlib.util.spec_from_file_location("ups_config", config_path)
-                                ups_config = importlib.util.module_from_spec(spec)
-                                spec.loader.exec_module(ups_config)
-                                if hasattr(ups_config, 'ALARM_STATUS'):
-                                    self.alarm_status = ups_config.ALARM_STATUS
-                        except:
-                            pass
-                        
-                        # Check if we're unmuting (changed from True to False) and alarm is active
-                        if old_value and not new_value and self.alarm_status:
-                            # Changed from muted (True) to unmuted (False) AND alarm is active
+                        # Unmuted (BUZZER_MUTED = False): enable buzzer ONLY if alarm is active
+                        if self.alarm_status:
+                            # Alarm is active - enable buzzer
                             if self.panel_led_controller and hasattr(self.panel_led_controller, 'enable_buzzer'):
                                 self.panel_led_controller.enable_buzzer(
                                     continuous=True,
@@ -3634,12 +3634,12 @@ class UPSTrapReceiver:
                                     beep_pause=0.5,
                                     volume=75
                                 )
-                                self.logger.info("Buzzer enabled (unmuted, ALARM_STATUS is True)")
+                                self.logger.info(f"Buzzer enabled (unmuted and ALARM_STATUS is True)")
                         else:
-                            # Just unmuted but no alarm, or other state - ensure buzzer is off
+                            # No active alarm - ensure buzzer is disabled
                             if self.panel_led_controller and hasattr(self.panel_led_controller, 'disable_buzzer'):
                                 self.panel_led_controller.disable_buzzer()
-                                self.logger.debug(f"Buzzer disabled (unmuted but ALARM_STATUS={self.alarm_status})")
+                                self.logger.info(f"Buzzer disabled (unmuted but no active alarm - ALARM_STATUS is False)")
                 else:
                     self.logger.error("[BUTTON] Failed to update BUZZER_MUTED in config.py - _update_buzzer_muted_config returned False")
             else:
