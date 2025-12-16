@@ -1,0 +1,12 @@
+{
+  "gpio_pins": {
+    "critical": 18,
+    "warning": 19,
+    "info": 20
+  },
+  "blink_enabled": true,
+  "blink_interval": 0.5,
+  "active_high": true,
+  "auto_clear_delay": null
+}
+

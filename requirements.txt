@@ -1,0 +1,10 @@
+pysnmp>=4.4.12
+pyasn1>=0.4.8
+
+# Note: On Debian, you can install these packages using apt-get instead:
+#   sudo apt-get install python3-pysnmp4 python3-pyasn1
+# The Debian package python3-pysnmp4 provides the same pysnmp Python module.
+
+# RPi.GPIO is optional - only needed on Raspberry Pi
+# Install with: pip3 install RPi.GPIO (on Raspberry Pi only)
+

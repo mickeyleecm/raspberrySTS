@@ -1,0 +1,13 @@
+{
+    "smtp_server": "192.168.111.22",
+    "smtp_port": 25,
+    "smtp_use_tls": true,
+    "smtp_username": "",
+    "smtp_password": "",
+    "from_email": "micky.lee@netsphere.com.hk",
+    "from_name": "Micky.Lee",
+    "email_recipients": [
+        "micky.lee@netsphere.com.hk"
+    ]
+}
+

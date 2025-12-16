@@ -1,0 +1,68 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "Test SMS",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/ups_snmp_trap_receiver_v3.py",                                    
+//            "program": "${workspaceFolder}/GetUPSStatus.py",                        
+//            "program": "${workspaceFolder}/test_gpio_pins.py",            
+//            "program": "${workspaceFolder}/ups_status_query.py",
+//            "program": "${workspaceFolder}/test_sms.py",
+//            "program": "${workspaceFolder}/ups_snmp_trap_sender.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--pin",
+                "4"
+            ],            
+//            "args": [
+//                "--host",
+//                "192.168.111.173"
+//            ],
+//            "args": [
+//                "--pid-file",
+//                "ups_trap_receiver.pid",
+//                "--log-file",
+//                "logs/ups_traps20251216.log",
+//                "--port",
+//                "162",
+//                "--email-config",
+            "justMyCode": true
+        },
+/*
+        {
+            "name": "UPS Trap Receiver (Port 162 - UPS IP 192.168.111.137)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/ups_snmp_trap_receiver_v2.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--port",
+                "162",
+                "--ups-ip",
+                "192.168.111.137"
+            ],
+            "justMyCode": true
+        },
+        {
+            "name": "UPS Trap Receiver (Port 162 - Custom Log - UPS IP 192.168.111.137)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/ups_snmp_trap_receiver.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--port",
+                "162",
+                "--log-file",
+                "ups_traps.log",
+                "--ups-ip",
+                "192.168.111.137"
+            ],
+            "justMyCode": true
+        }
+*/
+    ]
+}
+

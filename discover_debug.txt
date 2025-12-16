@@ -1,0 +1,527 @@
+================================================================================
+SNMP QUERY DEBUG LOG
+================================================================================
+Host: 192.168.111.173
+Community: public
+Port: 161
+Query Time: 2025-12-09 17:00:29
+================================================================================
+
+Total Queries: 97
+Successful: 7
+Failed: 90
+
+================================================================================
+DETAILED QUERY RESULTS
+================================================================================
+
+Query #1:
+  Timestamp: 2025-12-09T17:00:21.154791
+  OID: 43.6.1.4.1.32796.1.1
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #2:
+  Timestamp: 2025-12-09T17:00:21.251522
+  OID: 1.3.6.1.4.1.37662.1.2.3.1.1.1.1.0
+  ERROR: noSuchName
+
+Query #3:
+  Timestamp: 2025-12-09T17:00:21.328758
+  OID: 43.6.1.4.1.32796.1.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #4:
+  Timestamp: 2025-12-09T17:00:21.407268
+  OID: 43.6.1.4.1.32796.2.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #5:
+  Timestamp: 2025-12-09T17:00:21.483031
+  OID: 43.6.1.4.1.32796.3.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #6:
+  Timestamp: 2025-12-09T17:00:21.561754
+  OID: 43.6.1.4.1.32796.4.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #7:
+  Timestamp: 2025-12-09T17:00:21.638035
+  OID: 43.6.1.4.1.32796.5.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #8:
+  Timestamp: 2025-12-09T17:00:21.717990
+  OID: 43.6.1.4.1.32796.6.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #9:
+  Timestamp: 2025-12-09T17:00:21.794716
+  OID: 43.6.1.4.1.32796.7.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #10:
+  Timestamp: 2025-12-09T17:00:21.874657
+  OID: 43.6.1.4.1.32796.8.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #11:
+  Timestamp: 2025-12-09T17:00:21.952151
+  OID: 43.6.1.4.1.32796.9.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #12:
+  Timestamp: 2025-12-09T17:00:22.032653
+  OID: 43.6.1.4.1.32796.10.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #13:
+  Timestamp: 2025-12-09T17:00:22.109681
+  OID: 43.6.1.4.1.32796.11.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #14:
+  Timestamp: 2025-12-09T17:00:22.189824
+  OID: 43.6.1.4.1.32796.12.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #15:
+  Timestamp: 2025-12-09T17:00:22.266862
+  OID: 43.6.1.4.1.32796.13.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #16:
+  Timestamp: 2025-12-09T17:00:22.347759
+  OID: 43.6.1.4.1.32796.14.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #17:
+  Timestamp: 2025-12-09T17:00:22.425882
+  OID: 43.6.1.4.1.32796.15.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #18:
+  Timestamp: 2025-12-09T17:00:22.507545
+  OID: 43.6.1.4.1.32796.16.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #19:
+  Timestamp: 2025-12-09T17:00:22.586110
+  OID: 43.6.1.4.1.32796.17.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #20:
+  Timestamp: 2025-12-09T17:00:22.667939
+  OID: 43.6.1.4.1.32796.18.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #21:
+  Timestamp: 2025-12-09T17:00:22.746695
+  OID: 43.6.1.4.1.32796.19.0
+  ERROR: Malformed Object ID (43, '6') at ObjectName: '>=' not supported between instances of 'str' and 'int'
+
+Query #22:
+  Timestamp: 2025-12-09T17:00:22.835184
+  OID: 1.3.6.1.4.1.37662.1.0
+  ERROR: noSuchName
+
+Query #23:
+  Timestamp: 2025-12-09T17:00:22.918826
+  OID: 1.3.6.1.4.1.37662.2.0
+  ERROR: noSuchName
+
+Query #24:
+  Timestamp: 2025-12-09T17:00:23.014330
+  OID: 1.3.6.1.4.1.37662.3.0
+  ERROR: noSuchName
+
+Query #25:
+  Timestamp: 2025-12-09T17:00:23.098449
+  OID: 1.3.6.1.4.1.37662.4.0
+  ERROR: noSuchName
+
+Query #26:
+  Timestamp: 2025-12-09T17:00:23.203116
+  OID: 1.3.6.1.4.1.37662.5.0
+  ERROR: noSuchName
+
+Query #27:
+  Timestamp: 2025-12-09T17:00:23.286262
+  OID: 1.3.6.1.4.1.37662.6.0
+  ERROR: noSuchName
+
+Query #28:
+  Timestamp: 2025-12-09T17:00:23.369072
+  OID: 1.3.6.1.4.1.37662.7.0
+  ERROR: noSuchName
+
+Query #29:
+  Timestamp: 2025-12-09T17:00:23.456800
+  OID: 1.3.6.1.4.1.37662.8.0
+  ERROR: noSuchName
+
+Query #30:
+  Timestamp: 2025-12-09T17:00:23.540344
+  OID: 1.3.6.1.4.1.37662.9.0
+  ERROR: noSuchName
+
+Query #31:
+  Timestamp: 2025-12-09T17:00:23.623474
+  OID: 1.3.6.1.4.1.37662.10.0
+  ERROR: noSuchName
+
+Query #32:
+  Timestamp: 2025-12-09T17:00:23.711373
+  OID: 1.3.6.1.4.1.37662.11.0
+  ERROR: noSuchName
+
+Query #33:
+  Timestamp: 2025-12-09T17:00:23.794773
+  OID: 1.3.6.1.4.1.37662.12.0
+  ERROR: noSuchName
+
+Query #34:
+  Timestamp: 2025-12-09T17:00:23.882585
+  OID: 1.3.6.1.4.1.37662.13.0
+  ERROR: noSuchName
+
+Query #35:
+  Timestamp: 2025-12-09T17:00:23.966061
+  OID: 1.3.6.1.4.1.37662.14.0
+  ERROR: noSuchName
+
+Query #36:
+  Timestamp: 2025-12-09T17:00:24.049384
+  OID: 1.3.6.1.4.1.37662.15.0
+  ERROR: noSuchName
+
+Query #37:
+  Timestamp: 2025-12-09T17:00:24.137534
+  OID: 1.3.6.1.4.1.37662.16.0
+  ERROR: noSuchName
+
+Query #38:
+  Timestamp: 2025-12-09T17:00:24.220976
+  OID: 1.3.6.1.4.1.37662.17.0
+  ERROR: noSuchName
+
+Query #39:
+  Timestamp: 2025-12-09T17:00:24.308858
+  OID: 1.3.6.1.4.1.37662.18.0
+  ERROR: noSuchName
+
+Query #40:
+  Timestamp: 2025-12-09T17:00:24.393427
+  OID: 1.3.6.1.4.1.37662.19.0
+  ERROR: noSuchName
+
+Query #41:
+  Timestamp: 2025-12-09T17:00:24.478012
+  OID: 1.3.6.1.2.1.33.1.0
+  ERROR: noSuchName
+
+Query #42:
+  Timestamp: 2025-12-09T17:00:24.566536
+  OID: 1.3.6.1.2.1.33.2.0
+  ERROR: noSuchName
+
+Query #43:
+  Timestamp: 2025-12-09T17:00:24.650654
+  OID: 1.3.6.1.2.1.33.3.0
+  ERROR: noSuchName
+
+Query #44:
+  Timestamp: 2025-12-09T17:00:24.739360
+  OID: 1.3.6.1.2.1.33.4.0
+  ERROR: noSuchName
+
+Query #45:
+  Timestamp: 2025-12-09T17:00:24.823221
+  OID: 1.3.6.1.2.1.33.5.0
+  ERROR: noSuchName
+
+Query #46:
+  Timestamp: 2025-12-09T17:00:24.907136
+  OID: 1.3.6.1.2.1.33.6.0
+  ERROR: noSuchName
+
+Query #47:
+  Timestamp: 2025-12-09T17:00:25.010774
+  OID: 1.3.6.1.2.1.33.7.0
+  ERROR: noSuchName
+
+Query #48:
+  Timestamp: 2025-12-09T17:00:25.094385
+  OID: 1.3.6.1.2.1.33.8.0
+  ERROR: noSuchName
+
+Query #49:
+  Timestamp: 2025-12-09T17:00:25.182909
+  OID: 1.3.6.1.2.1.33.9.0
+  ERROR: noSuchName
+
+Query #50:
+  Timestamp: 2025-12-09T17:00:25.266760
+  OID: 1.3.6.1.2.1.33.10.0
+  ERROR: noSuchName
+
+Query #51:
+  Timestamp: 2025-12-09T17:00:25.350768
+  OID: 1.3.6.1.2.1.33.11.0
+  ERROR: noSuchName
+
+Query #52:
+  Timestamp: 2025-12-09T17:00:25.439475
+  OID: 1.3.6.1.2.1.33.12.0
+  ERROR: noSuchName
+
+Query #53:
+  Timestamp: 2025-12-09T17:00:25.523463
+  OID: 1.3.6.1.2.1.33.13.0
+  ERROR: noSuchName
+
+Query #54:
+  Timestamp: 2025-12-09T17:00:25.611897
+  OID: 1.3.6.1.2.1.33.14.0
+  ERROR: noSuchName
+
+Query #55:
+  Timestamp: 2025-12-09T17:00:25.695655
+  OID: 1.3.6.1.2.1.33.15.0
+  ERROR: noSuchName
+
+Query #56:
+  Timestamp: 2025-12-09T17:00:25.779517
+  OID: 1.3.6.1.2.1.33.16.0
+  ERROR: noSuchName
+
+Query #57:
+  Timestamp: 2025-12-09T17:00:25.883867
+  OID: 1.3.6.1.2.1.33.17.0
+  ERROR: noSuchName
+
+Query #58:
+  Timestamp: 2025-12-09T17:00:25.968094
+  OID: 1.3.6.1.2.1.33.18.0
+  ERROR: noSuchName
+
+Query #59:
+  Timestamp: 2025-12-09T17:00:26.056699
+  OID: 1.3.6.1.2.1.33.19.0
+  ERROR: noSuchName
+
+Query #60:
+  Timestamp: 2025-12-09T17:00:26.141706
+  OID: 1.3.6.1.4.1.935.1.0
+  ERROR: noSuchName
+
+Query #61:
+  Timestamp: 2025-12-09T17:00:26.226184
+  OID: 1.3.6.1.4.1.935.2.0
+  ERROR: noSuchName
+
+Query #62:
+  Timestamp: 2025-12-09T17:00:26.315749
+  OID: 1.3.6.1.4.1.935.3.0
+  ERROR: noSuchName
+
+Query #63:
+  Timestamp: 2025-12-09T17:00:26.400001
+  OID: 1.3.6.1.4.1.935.4.0
+  ERROR: noSuchName
+
+Query #64:
+  Timestamp: 2025-12-09T17:00:26.488129
+  OID: 1.3.6.1.4.1.935.5.0
+  ERROR: noSuchName
+
+Query #65:
+  Timestamp: 2025-12-09T17:00:26.572334
+  OID: 1.3.6.1.4.1.935.6.0
+  ERROR: noSuchName
+
+Query #66:
+  Timestamp: 2025-12-09T17:00:26.655665
+  OID: 1.3.6.1.4.1.935.7.0
+  ERROR: noSuchName
+
+Query #67:
+  Timestamp: 2025-12-09T17:00:26.743725
+  OID: 1.3.6.1.4.1.935.8.0
+  ERROR: noSuchName
+
+Query #68:
+  Timestamp: 2025-12-09T17:00:26.827463
+  OID: 1.3.6.1.4.1.935.9.0
+  ERROR: noSuchName
+
+Query #69:
+  Timestamp: 2025-12-09T17:00:26.915411
+  OID: 1.3.6.1.4.1.935.10.0
+  ERROR: noSuchName
+
+Query #70:
+  Timestamp: 2025-12-09T17:00:27.011992
+  OID: 1.3.6.1.4.1.935.11.0
+  ERROR: noSuchName
+
+Query #71:
+  Timestamp: 2025-12-09T17:00:27.095367
+  OID: 1.3.6.1.4.1.935.12.0
+  ERROR: noSuchName
+
+Query #72:
+  Timestamp: 2025-12-09T17:00:27.184343
+  OID: 1.3.6.1.4.1.935.13.0
+  ERROR: noSuchName
+
+Query #73:
+  Timestamp: 2025-12-09T17:00:27.268111
+  OID: 1.3.6.1.4.1.935.14.0
+  ERROR: noSuchName
+
+Query #74:
+  Timestamp: 2025-12-09T17:00:27.356636
+  OID: 1.3.6.1.4.1.935.15.0
+  ERROR: noSuchName
+
+Query #75:
+  Timestamp: 2025-12-09T17:00:27.440914
+  OID: 1.3.6.1.4.1.935.16.0
+  ERROR: noSuchName
+
+Query #76:
+  Timestamp: 2025-12-09T17:00:27.525007
+  OID: 1.3.6.1.4.1.935.17.0
+  ERROR: noSuchName
+
+Query #77:
+  Timestamp: 2025-12-09T17:00:27.614203
+  OID: 1.3.6.1.4.1.935.18.0
+  ERROR: noSuchName
+
+Query #78:
+  Timestamp: 2025-12-09T17:00:27.698623
+  OID: 1.3.6.1.4.1.935.19.0
+  ERROR: noSuchName
+
+Query #79:
+  Timestamp: 2025-12-09T17:00:27.789043
+  OID: 1.3.6.1.2.1.1.1.0
+  Value Type: OctetString
+  Value: SNMP Smart II Card v1.08 (SN 11230032204012)
+  Value (Pretty): SNMP Smart II Card v1.08 (SN 11230032204012)
+
+Query #80:
+  Timestamp: 2025-12-09T17:00:27.874281
+  OID: 1.3.6.1.2.1.1.2.0
+  Value Type: ObjectIdentifier
+  Value: 1.3.6.1.4.1.37662.1.2.2.1
+  Value (Pretty): 1.3.6.1.4.1.37662.1.2.2.1
+
+Query #81:
+  Timestamp: 2025-12-09T17:00:27.958859
+  OID: 1.3.6.1.2.1.1.3.0
+  Value Type: TimeTicks
+  Value: 11568
+  Value (Pretty): 11568
+
+Query #82:
+  Timestamp: 2025-12-09T17:00:28.048652
+  OID: 1.3.6.1.2.1.1.4.0
+  Value Type: OctetString
+  Value: Technical Support Team
+  Value (Pretty): Technical Support Team
+
+Query #83:
+  Timestamp: 2025-12-09T17:00:28.133098
+  OID: 1.3.6.1.2.1.1.5.0
+  Value Type: OctetString
+  Value: SNMP
+  Value (Pretty): SNMP
+
+Query #84:
+  Timestamp: 2025-12-09T17:00:28.222463
+  OID: 1.3.6.1.2.1.1.6.0
+  Value Type: OctetString
+  Value: 
+  Value (Pretty): 
+
+Query #85:
+  Timestamp: 2025-12-09T17:00:28.307026
+  OID: 1.3.6.1.2.1.1.7.0
+  Value Type: Integer
+  Value: 72
+  Value (Pretty): 72
+
+Query #86:
+  Timestamp: 2025-12-09T17:00:28.391320
+  OID: 1.3.6.1.2.1.1.8.0
+  ERROR: noSuchName
+
+Query #87:
+  Timestamp: 2025-12-09T17:00:28.496989
+  OID: 1.3.6.1.2.1.1.9.0
+  ERROR: noSuchName
+
+Query #88:
+  Timestamp: 2025-12-09T17:00:28.581354
+  OID: 1.3.6.1.2.1.1.10.0
+  ERROR: noSuchName
+
+Query #89:
+  Timestamp: 2025-12-09T17:00:28.670168
+  OID: 1.3.6.1.2.1.1.11.0
+  ERROR: noSuchName
+
+Query #90:
+  Timestamp: 2025-12-09T17:00:28.754381
+  OID: 1.3.6.1.2.1.1.12.0
+  ERROR: noSuchName
+
+Query #91:
+  Timestamp: 2025-12-09T17:00:28.838769
+  OID: 1.3.6.1.2.1.1.13.0
+  ERROR: noSuchName
+
+Query #92:
+  Timestamp: 2025-12-09T17:00:28.928607
+  OID: 1.3.6.1.2.1.1.14.0
+  ERROR: noSuchName
+
+Query #93:
+  Timestamp: 2025-12-09T17:00:29.013739
+  OID: 1.3.6.1.2.1.1.15.0
+  ERROR: noSuchName
+
+Query #94:
+  Timestamp: 2025-12-09T17:00:29.102900
+  OID: 1.3.6.1.2.1.1.16.0
+  ERROR: noSuchName
+
+Query #95:
+  Timestamp: 2025-12-09T17:00:29.186834
+  OID: 1.3.6.1.2.1.1.17.0
+  ERROR: noSuchName
+
+Query #96:
+  Timestamp: 2025-12-09T17:00:29.270952
+  OID: 1.3.6.1.2.1.1.18.0
+  ERROR: noSuchName
+
+Query #97:
+  Timestamp: 2025-12-09T17:00:29.360272
+  OID: 1.3.6.1.2.1.1.19.0
+  ERROR: noSuchName
+
+
+================================================================================
+OID SUMMARY BY BASE
+================================================================================
+
+1.3.6.1:
+  Total: 77, Success: 7, Failed: 70
+
+43.6.1.4:
+  Total: 20, Success: 0, Failed: 20
+

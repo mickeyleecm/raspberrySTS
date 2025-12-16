@@ -1,0 +1,134 @@
+2025-11-14 14:59:03,752 - INFO - Starting UPS SNMP Trap Receiver on port 162
+2025-11-14 14:59:03,752 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 14:59:03,752 - INFO - Press Ctrl+C to stop
+2025-11-14 14:59:03,903 - ERROR - Unexpected error: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'
+Traceback (most recent call last):
+  File "c:\Project\Raspberfry\Program\ups_snmp_trap_receiver.py", line 209, in start
+    config.addV2cSystem(self.snmp_engine, 'my-area', 'public')
+    ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\entity\config.py", line 70, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{attr}'")
+AttributeError: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'. Did you mean: 'add_v1_system'?
+2025-11-14 14:59:03,905 - INFO - UPS SNMP Trap Receiver stopped
+2025-11-14 14:59:03,913 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<AsyncioDispatcher.handle_timeout() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\carrier\asyncio\dispatch.py:62>>
+2025-11-14 14:59:03,916 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-1' coro=<BaseEventLoop.create_datagram_endpoint() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:1357>>
+2025-11-14 15:00:53,247 - INFO - Starting UPS SNMP Trap Receiver on port 162
+2025-11-14 15:00:53,247 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:00:53,247 - INFO - Press Ctrl+C to stop
+2025-11-14 15:00:53,375 - ERROR - Unexpected error: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'
+Traceback (most recent call last):
+  File "c:\Project\Raspberfry\Program\ups_snmp_trap_receiver.py", line 248, in start
+    config.addV2cSystem(self.snmp_engine, 'my-area', 'public')
+    ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\entity\config.py", line 70, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{attr}'")
+AttributeError: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'. Did you mean: 'add_v1_system'?
+2025-11-14 15:00:53,377 - INFO - UPS SNMP Trap Receiver stopped
+2025-11-14 15:00:53,384 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<AsyncioDispatcher.handle_timeout() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\carrier\asyncio\dispatch.py:62>>
+2025-11-14 15:00:53,386 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-1' coro=<BaseEventLoop.create_datagram_endpoint() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:1357>>
+2025-11-14 15:02:00,663 - INFO - Starting UPS SNMP Trap Receiver on port 162
+2025-11-14 15:02:00,664 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:02:00,664 - INFO - Press Ctrl+C to stop
+2025-11-14 15:02:00,810 - ERROR - Unexpected error: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'
+Traceback (most recent call last):
+  File "c:\Project\Raspberfry\Program\ups_snmp_trap_receiver.py", line 248, in start
+    config.addV2cSystem(self.snmp_engine, 'my-area', 'public')
+    ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\entity\config.py", line 70, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{attr}'")
+AttributeError: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'. Did you mean: 'add_v1_system'?
+2025-11-14 15:02:00,812 - INFO - UPS SNMP Trap Receiver stopped
+2025-11-14 15:02:00,819 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<AsyncioDispatcher.handle_timeout() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\carrier\asyncio\dispatch.py:62>>
+2025-11-14 15:02:00,821 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-1' coro=<BaseEventLoop.create_datagram_endpoint() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:1357>>
+2025-11-14 15:05:47,086 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 15:05:47,086 - INFO - Listening on port: 162
+2025-11-14 15:05:47,086 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:05:47,087 - INFO - Press Ctrl+C to stop
+2025-11-14 15:05:47,220 - ERROR - Unexpected error: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'
+Traceback (most recent call last):
+  File "c:\Project\Raspberfry\Program\ups_snmp_trap_receiver.py", line 252, in start
+    config.addV2cSystem(self.snmp_engine, 'my-area', 'public')
+    ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\entity\config.py", line 70, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{attr}'")
+AttributeError: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'. Did you mean: 'add_v1_system'?
+2025-11-14 15:05:47,224 - INFO - UPS SNMP Trap Receiver stopped
+2025-11-14 15:05:47,233 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<AsyncioDispatcher.handle_timeout() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\carrier\asyncio\dispatch.py:62>>
+2025-11-14 15:05:47,235 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-1' coro=<BaseEventLoop.create_datagram_endpoint() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:1357>>
+2025-11-14 15:09:08,360 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 15:09:08,360 - INFO - Listening on port: 1162
+2025-11-14 15:09:08,361 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:09:08,361 - INFO - Press Ctrl+C to stop
+2025-11-14 15:09:08,454 - ERROR - Unexpected error: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'
+Traceback (most recent call last):
+  File "C:\Project\Raspberfry\Program/ups_snmp_trap_receiver.py", line 252, in start
+    config.addV2cSystem(self.snmp_engine, 'my-area', 'public')
+    ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\entity\config.py", line 70, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{attr}'")
+AttributeError: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'. Did you mean: 'add_v1_system'?
+2025-11-14 15:09:08,456 - INFO - UPS SNMP Trap Receiver stopped
+2025-11-14 15:09:08,463 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<AsyncioDispatcher.handle_timeout() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\carrier\asyncio\dispatch.py:62>>
+2025-11-14 15:09:08,465 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-1' coro=<BaseEventLoop.create_datagram_endpoint() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:1357>>
+2025-11-14 15:10:25,906 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 15:10:25,907 - INFO - Listening on port: 1162
+2025-11-14 15:10:25,907 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:10:25,907 - INFO - Press Ctrl+C to stop
+2025-11-14 15:10:26,000 - ERROR - Unexpected error: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'
+Traceback (most recent call last):
+  File "C:\Project\Raspberfry\Program/ups_snmp_trap_receiver.py", line 252, in start
+    config.addV2cSystem(self.snmp_engine, 'my-area', 'public')
+    ^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\entity\config.py", line 70, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{attr}'")
+AttributeError: module 'pysnmp.entity.config' has no attribute 'addV2cSystem'. Did you mean: 'add_v1_system'?
+2025-11-14 15:10:26,002 - INFO - UPS SNMP Trap Receiver stopped
+2025-11-14 15:10:26,011 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<AsyncioDispatcher.handle_timeout() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\carrier\asyncio\dispatch.py:62>>
+2025-11-14 15:10:26,013 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-1' coro=<BaseEventLoop.create_datagram_endpoint() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:1357>>
+2025-11-14 15:12:35,016 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 15:12:35,017 - INFO - Listening on port: 1162
+2025-11-14 15:12:35,017 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:12:35,017 - INFO - Press Ctrl+C to stop
+2025-11-14 15:12:35,118 - ERROR - Unexpected error: module 'pysnmp.entity.config' has no attribute 'add_v2c_system'
+Traceback (most recent call last):
+  File "C:\Project\Raspberfry\Program/ups_snmp_trap_receiver.py", line 252, in start
+    config.add_v2c_system(self.snmp_engine, 'my-area', 'public')
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\entity\config.py", line 70, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{attr}'")
+AttributeError: module 'pysnmp.entity.config' has no attribute 'add_v2c_system'. Did you mean: 'add_v1_system'?
+2025-11-14 15:12:35,122 - INFO - UPS SNMP Trap Receiver stopped
+2025-11-14 15:12:35,129 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<AsyncioDispatcher.handle_timeout() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\site-packages\pysnmp\carrier\asyncio\dispatch.py:62>>
+2025-11-14 15:12:35,131 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-1' coro=<BaseEventLoop.create_datagram_endpoint() running at c:\Users\micky.lee\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:1357>>
+2025-11-14 15:14:28,180 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 15:14:28,180 - INFO - Listening on port: 1162
+2025-11-14 15:14:28,180 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:14:28,180 - INFO - Press Ctrl+C to stop
+2025-11-14 15:15:22,329 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 15:15:22,329 - INFO - Listening on port: 1162
+2025-11-14 15:15:22,330 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:15:22,330 - INFO - Press Ctrl+C to stop
+2025-11-14 15:19:42,363 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 15:19:42,363 - INFO - Listening on port: 1162
+2025-11-14 15:19:42,363 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 15:19:42,363 - INFO - Filtering: Only accepting traps from: 192.168.111.137
+2025-11-14 15:19:42,363 - INFO - Press Ctrl+C to stop
+2025-11-14 16:21:17,060 - INFO - Starting UPS SNMP Trap Receiver on Windows
+2025-11-14 16:21:17,060 - INFO - Listening on port: 162
+2025-11-14 16:21:17,060 - INFO - Logging to: C:\Project\Raspberfry\Program\ups_traps.log
+2025-11-14 16:21:17,060 - INFO - Filtering: Only accepting traps from: 192.168.111.137
+2025-11-14 16:21:17,060 - INFO - Press Ctrl+C to stop

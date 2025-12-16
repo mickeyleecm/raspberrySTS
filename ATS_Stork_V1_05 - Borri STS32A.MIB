@@ -1,0 +1,1872 @@
+-- ATS MIB
+-- MIB for Uninterruptible Power Supplies
+--
+-- { iso org(3) dod(6) internet(1) private(4) enterprises(1) ats(37662)
+-- product(1) webAppliance(2) atsAgent(3)
+-- ==============================================================================================
+---
+---     Revision History
+---
+---     v1.00   01-Sep-2021   Kenneth/Sean
+---                             1. change atsAgent(2) -> atsAgent(3) for new platform.
+---                             2. change EMD Trap -> EMD31 Trap.
+---                             3. Added ushaSendTestTrapEvent、ushaSendTestMailEvent.
+---                             4. Remove agentConfigPollRate、agentConfigTrapRetryCount、agentConfigTrapRetryTime、agentConfigTrapAckSignature.
+---                             5. Modify receiverCommunityString、receiverSeverityLevel、envMonDevStatusIndex、envMonDevStatusAlarm1、envMonDevStatusAlarm2.
+---                             6. Modify envMonDevCfgTempOffset、envMonDevCfgHumiOffset
+---
+---     v1.01   29-Dec-2021   Sean
+---                             1. Modify atsOutputGroupOutputSource、atsInputGroupPreference
+---
+---     v1.02   17-Mar-2022   Sean
+---                             1. Modify atsInputGroupPreference、atsOutputGroupOutputSource INTEGER -> DisplayString
+---                             2. change atsAgent(3) -> atsAgent(2)
+---
+---     v1.03   05-May-2022   Sean
+---                             1. Modify ushaSendTestTrapEvent -> atsSendTestTrapEvent, ushaSendTestMailEvent -> atsSendTestMailEvent
+---                             2. Add atsCommunicationAbnormal、atsEpoAlarm、atsCommunicationToNormal、atsEpoToNormal
+---                             3. Add agentConfigAccessControlTable、agentConfigAccessControlEntry、accessIndex、accessControlAddr、accessPrefixLength、accessControlMode
+---                             4. change atsAgent(2) -> atsAgent(3) for new platform.
+---
+---     v1.04   14-Nov-2022   Sean
+---                             1. Modify all the DESCRIPTIONs of atsTrapGroup.
+---                             2. Modify the DESCRIPTIONs of atsHmiSwitchGroupAtsAlarm、atsHmiSwitchGroupSourceTransferByLoad、atsHmiSwitchGroupSourceTransferByPhase and agentConfigHistoryLogFrequency.
+---     v1.05   19-Apr-2023   Sean
+---                             1. Modify the DESCRIPTIONs of atsInputGroupSourceAinputVoltage、atsInputGroupSourceAvoltageUpperLimit、atsInputGroupSourceAvoltageLowerLimit
+---                             2. Modify the DESCRIPTIONs of atsInputGroupSourceBinputVoltage、atsInputGroupSourceBvoltageUpperLimit、atsInputGroupSourceBvoltageLowerLimit
+---                             3. Modify the DESCRIPTIONs of atsOutputGroupOutputVoltage、atsOutputGroupLoad
+---                             4. Modify the DESCRIPTIONs of envMonDevCfgTempHighWarning、envMonDevCfgTempLowWarning、envMonDevCfgTempHighCritical、envMonDevCfgTempLowCritical.
+---                             5. Modify the DESCRIPTIONs of envMonDevCfgHumiHighWarning、envMonDevCfgHumiLowWarning、envMonDevCfgHumiHighCritical、envMonDevCfgHumiLowCritical.
+---
+
+ATS-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+  enterprises,Counter,IpAddress
+    FROM RFC1155-SMI
+  OBJECT-TYPE
+    FROM RFC-1212
+  DisplayString
+    FROM RFC1213-MIB
+  TRAP-TYPE
+    FROM RFC-1215
+  PositiveInteger,NonNegativeInteger
+    FROM UPS-MIB;
+
+ats                    OBJECT IDENTIFIER ::= { enterprises 37662 }
+product                OBJECT IDENTIFIER ::= { ats 1 }
+webAppliance           OBJECT IDENTIFIER ::= { product 2 }
+atsAgent               OBJECT IDENTIFIER ::= { webAppliance 3 }
+single                 OBJECT IDENTIFIER ::= { atsAgent 1 }
+atsObjectGroup         OBJECT IDENTIFIER ::= { single 1 }
+atsTrapGroup           OBJECT IDENTIFIER ::= { single 2 }
+                       
+atsIdentGroup          OBJECT IDENTIFIER ::= { atsObjectGroup 1 }
+atsInputGroup          OBJECT IDENTIFIER ::= { atsObjectGroup 2 }
+atsOutputGroup         OBJECT IDENTIFIER ::= { atsObjectGroup 3 }
+atsHmiSwitchGroup      OBJECT IDENTIFIER ::= { atsObjectGroup 4 }
+atsMiscellaneousGroup  OBJECT IDENTIFIER ::= { atsObjectGroup 5 }
+atsControlGroup        OBJECT IDENTIFIER ::= { atsObjectGroup 6 }
+agentConfig     OBJECT IDENTIFIER ::= { atsObjectGroup 7 }
+envMonDev       OBJECT IDENTIFIER ::= { atsObjectGroup 8 }
+
+-- ===========================================================================
+--
+-- atsIdentification
+--
+--     The Identification group.
+--
+-- ===========================================================================
+
+atsIdentGroupModel  OBJECT-TYPE
+       SYNTAX     DisplayString
+       ACCESS     read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The device model name."
+       ::= { atsIdentGroup 1 }
+
+atsIdentGroupSerialNumber  OBJECT-TYPE
+      SYNTAX DisplayString
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION
+          "The device serial number."
+      ::= { atsIdentGroup 2 }
+
+atsIdentGroupManufacturer OBJECT-TYPE
+       SYNTAX     DisplayString
+       ACCESS     read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The device manufacturer name."
+      ::= { atsIdentGroup 3 }
+
+atsIdentGroupFirmwareRevision  OBJECT-TYPE
+      SYNTAX DisplayString
+      ACCESS read-only
+      STATUS mandatory
+      DESCRIPTION
+               "The device firmware revision."
+      ::= { atsIdentGroup 4 }
+
+atsIdentGroupAgentFirmwareRevision  OBJECT-TYPE
+       SYNTAX     DisplayString
+       ACCESS     read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The agent firmware revision."
+       ::= { atsIdentGroup 5 }
+
+-- ===========================================================================
+-- atsInputGroup
+--
+--     The Input group.
+-- ===========================================================================
+
+atsInputGroupPreference  OBJECT-TYPE
+       SYNTAX  DisplayString
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "This shows the Output Source Priority by Source A or Source B."
+       ::= { atsInputGroup 1 }
+
+atsInputGroupSourceAstatus   OBJECT-TYPE
+       SYNTAX  INTEGER {
+           fail(1),
+           ok(2)
+       }
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "This field shows the status of the source A. Status included? 'OK','Fail'. 'OK' mean frequency and voltage of Source A are normal."
+       ::= { atsInputGroup 2 }
+
+atsInputGroupSourceAinputVoltage    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source A input voltage  of the ATS input in 0.1 volts."
+       ::= { atsInputGroup 3 }
+
+atsInputGroupSourceAinputFrequency    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source A input frequency of the ATS input in 0.1 Hz."
+       ::= { atsInputGroup 4 }
+
+atsInputGroupSourceBstatus   OBJECT-TYPE
+       SYNTAX  INTEGER {
+           fail(1),
+           ok(2)
+     }
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "This field shows the status of the source B. Status included? 'OK','Fail'. 'OK' mean frequency and voltage of Source B are normal."
+       ::= { atsInputGroup 5 }
+
+atsInputGroupSourceBinputVoltage    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source B input voltage  of the ATS input in 0.1 volts."
+       ::= { atsInputGroup 6 }
+
+atsInputGroupSourceBinputFrequency    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source B input frequency of the ATS input in 0.1 Hz."
+       ::= { atsInputGroup 7 }
+
+atsInputGroupSourceAvoltageUpperLimit    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source A voltage upper limit  of the ATS input in 0.1 volts."
+       ::= { atsInputGroup 8 }
+
+atsInputGroupSourceAvoltageLowerLimit    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source A voltage lower limit of the ATS input in 0.1 volts."
+       ::= { atsInputGroup 9 }
+
+atsInputGroupSourceAfrequencyUpperLimit   OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source A frequency upper limit of the ATS input in 0.1 Hz."
+       ::= { atsInputGroup 10 }
+
+atsInputGroupSourceAfrequencyLowerLimit    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source A frequency lower limit of the ATS input in 0.1 Hz."
+       ::= { atsInputGroup 11 }
+
+atsInputGroupSourceBvoltageUpperLimit    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source B voltage upper limit  of the ATS input in 0.1 volts."
+       ::= { atsInputGroup 12 }
+
+atsInputGroupSourceBvoltageLowerLimit    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source B voltage lower limit of the ATS input in 0.1 volts."
+       ::= { atsInputGroup 13 }
+
+atsInputGroupSourceBfrequencyUpperLimit   OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source B frequency upper limit of the ATS input in 0.1 Hz."
+       ::= { atsInputGroup 14 }
+
+atsInputGroupSourceBfrequencyLowerLimit    OBJECT-TYPE
+       SYNTAX  INTEGER
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The source B frequency lower limit of the ATS input in 0.1 Hz."
+       ::= { atsInputGroup 15 }
+
+-- ===========================================================================
+-- atsOutputGroup
+--
+-- Output group.
+-- ===========================================================================
+
+atsOutputGroupOutputSource OBJECT-TYPE
+     SYNTAX   DisplayString
+     ACCESS read-only
+     STATUS     mandatory
+     DESCRIPTION
+             "Output source is supply by Source A or Source B or Bypass Source A or Bypass Source B. Status included? 'Source A','Source B','Bypass Source A','Bypass Source B'."
+     ::= {  atsOutputGroup 1 }
+
+atsOutputGroupOutputVoltage OBJECT-TYPE
+     SYNTAX NonNegativeInteger
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "The Output Voltage in 0.1 volts."
+     ::= { atsOutputGroup 2 }
+
+atsOutputGroupOutputFequency  OBJECT-TYPE
+     SYNTAX NonNegativeInteger
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "The output fequency in 0.1 Hz."
+     ::= { atsOutputGroup 3 }
+
+atsOutputGroupOutputCurrent OBJECT-TYPE
+     SYNTAX NonNegativeInteger
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "The output current  in 0.1 A."
+     ::= { atsOutputGroup 4 }
+
+atsOutputGroupLoad OBJECT-TYPE
+     SYNTAX NonNegativeInteger
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "The load in 0.1 %."
+     ::= { atsOutputGroup 5 }
+
+-- ===========================================================================
+-- atsHmiSwitchGroup
+--
+-- Hmi and switch group
+-- ===========================================================================
+
+atsHmiSwitchGroupBuzzer OBJECT-TYPE
+     SYNTAX     INTEGER {
+           buzzerDisabled(1),
+           buzzerEnabled(2)
+     }
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "This field shows the status of the buzzer. Status included? 'Enable','Disable'. "
+     ::= { atsHmiSwitchGroup 1 }
+
+atsHmiSwitchGroupAtsAlarm  OBJECT-TYPE
+     SYNTAX INTEGER {
+           nothing(1),
+           atsOccurAlarm(2)
+     }
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "This shows the alarm occurred."
+       ::= {  atsHmiSwitchGroup 2 }
+
+atsHmiSwitchGroupAutoReturn OBJECT-TYPE
+     SYNTAX INTEGER {
+           off(1),
+           on(2)
+     }
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "Auto recover to that setting value when two input source normal."
+     ::= { atsHmiSwitchGroup 3 }
+
+atsHmiSwitchGroupSourceTransferByLoad  OBJECT-TYPE
+     SYNTAX INTEGER {
+           off(1),
+           on(2)
+     }
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "On: If overload timeout occurred , ATS will transfer to another source automatically. Off:If overloaded timeout occurred , ATS will turn off the output source."
+     ::= { atsHmiSwitchGroup 4 }
+
+atsHmiSwitchGroupSourceTransferByPhase  OBJECT-TYPE
+     SYNTAX INTEGER {
+           off(1),
+           on(2)
+     }
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "On: when the transfer of output source occur, the transfer can active if difference of phase less than setting value Off: Switch transfer immed... whatever difference of phase."
+     ::= { atsHmiSwitchGroup 5 }
+
+-- ===========================================================================
+-- atsMiscellaneousGroup
+-- ===========================================================================
+atsMiscellaneousGroupAtsSystemTemperture  OBJECT-TYPE
+     SYNTAX     INTEGER 
+       ACCESS read-only
+       STATUS     mandatory
+       DESCRIPTION
+               "The ATS system temperture in degree C."
+       ::= {  atsMiscellaneousGroup 1 }
+ 
+atsMiscellaneousGroupSystemMaxCurrent OBJECT-TYPE
+     SYNTAX INTEGER
+     ACCESS read-only
+     STATUS mandatory
+     DESCRIPTION
+         "The system max current int 0.1 Amp."
+     ::= { atsMiscellaneousGroup 2 }
+  
+-- ===========================================================================
+-- atsControlGroup
+--
+-- ===========================================================================
+
+atsControlGroupBuzzerAlarmControl OBJECT-TYPE
+     SYNTAX INTEGER {
+           buzzerOff(1),
+           buzzerOn(2)
+     }
+     ACCESS read-write
+     STATUS mandatory
+     DESCRIPTION
+         "The buzzer alarm control."
+     ::= { atsControlGroup 1}
+
+atsControlGroupManualTransfer OBJECT-TYPE
+     SYNTAX INTEGER
+     ACCESS read-write
+     STATUS mandatory
+     DESCRIPTION
+         "User can click this bottom to decide output source supply is Source A or Source B."
+     ::= { atsControlGroup 2}
+
+-- ===========================================================================
+--
+-- agentConfig
+--
+-- ===========================================================================
+
+agentConfigIpaddress OBJECT-TYPE
+        SYNTAX IpAddress
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                " The ip address that NMS can identify the managed
+                device"
+        ::= { agentConfig 1}
+
+agentConfigGateway OBJECT-TYPE
+        SYNTAX IpAddress
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                " The default gateway that allow device managed
+                through routers "
+        ::= { agentConfig 2}
+
+agentConfigSubnetMask OBJECT-TYPE
+        SYNTAX IpAddress
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                " Internet address subnet mask"
+        ::= { agentConfig 3}
+
+agentConfigDate OBJECT-TYPE
+        SYNTAX DisplayString (SIZE (10..10))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The date in agent, format is (dd/mm/yyyy)"
+        ::= { agentConfig 4}
+
+agentConfigTime OBJECT-TYPE
+        SYNTAX DisplayString (SIZE (8..8))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The time in agent, format is (hh:mm:ss)"
+        ::= { agentConfig 5}
+
+agentConfigHistoryLogFrequency OBJECT-TYPE
+        SYNTAX INTEGER (1..28800) -- in seconds
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The frequency of the update of the history log. The value
+                 is in seconds"
+        ::= { agentConfig 6 }
+
+agentConfigExtHistoryLogFrequency      OBJECT-TYPE
+        SYNTAX INTEGER (1..10080) -- in minutes
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                 "The ups parameters are sampled at the rate governed by the
+                  mconfigHistroyLogFrequency. These sampled values are further
+                  conslidated over period of time which is determined by this
+                  object."
+        ::= { agentConfig 7 }
+
+agentConfigBaudRate OBJECT-TYPE
+        SYNTAX INTEGER
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The serial port communication speed. only 9600 allowed"
+        ::= { agentConfig 8}
+
+agentConfigDhcpStatue OBJECT-TYPE
+        SYNTAX  INTEGER {
+                enabled(1),
+                disabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Enable or disable DHCP/BootP capability"
+        ::= { agentConfig 9}
+
+agentConfigTelnetStatue OBJECT-TYPE
+        SYNTAX  INTEGER {
+                enabled(1),
+                disabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Enable or disable telnet access"
+        ::= { agentConfig 10}
+
+agentConfigTftpStatue OBJECT-TYPE
+        SYNTAX  INTEGER {
+                enabled(1),
+                disabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Enable or disable network upgrade capability"
+        ::= { agentConfig 11}
+
+agentConfigResetToDefault OBJECT-TYPE
+        SYNTAX  INTEGER {
+                reset(1),
+                nothing(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Reset all parameters of ATS to default value"
+        ::= { agentConfig 12}
+
+agentConfigRestart OBJECT-TYPE
+        SYNTAX  INTEGER {
+                restart(1),
+                nothing(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Restart ATS"
+        ::= { agentConfig 13}
+
+agentConfigClearAgentLog OBJECT-TYPE
+        SYNTAX  INTEGER {
+                clear(1),
+                nothing(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Clear agent log data"
+        ::= { agentConfig 14}
+
+agentConfigClearEventLog OBJECT-TYPE
+        SYNTAX  INTEGER {
+                clear(1),
+                nothing(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Clear event log data"
+        ::= { agentConfig 15}
+
+agentConfigClearExtHistoryLog OBJECT-TYPE
+        SYNTAX  INTEGER {
+                clear(1),
+                nothing(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Clear extented history log data"
+        ::= { agentConfig 16}
+
+agentConfigClearHistoryLog OBJECT-TYPE
+        SYNTAX  INTEGER {
+                clear(1),
+                nothing(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Clear history log data"
+        ::= { agentConfig 17}
+
+agentConfigMibVersion OBJECT-TYPE
+        SYNTAX INTEGER
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The version of MIB spec."
+        ::= { agentConfig 18 }
+
+agentConfigTrapsReceiversTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF AgentConfigTrapsReceiversEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "A list of managers to send traps to.  The number of
+                 entries is given by the value of agentConfigNumTrapReceivers"
+        ::= { agentConfig 19}
+
+agentConfigTrapsReceiversEntry OBJECT-TYPE
+        SYNTAX AgentConfigTrapsReceiversEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "The managers to send traps to."
+        INDEX  { trapsIndex}
+        ::= { agentConfigTrapsReceiversTable 1 }
+
+AgentConfigTrapsReceiversEntry ::=
+        SEQUENCE {
+                trapsIndex
+                        INTEGER,
+                trapsReceiverAddr
+                        DisplayString,
+                receiverCommunityString
+                         DisplayString,
+                receiverNmsType
+                        INTEGER,
+                receiverSeverityLevel
+                        INTEGER,
+                receiverDescription
+                         DisplayString
+        }
+
+trapsIndex OBJECT-TYPE
+        SYNTAX INTEGER (0..65535)
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The index to a trap receiver entry."
+        ::= { agentConfigTrapsReceiversEntry 1 }
+
+trapsReceiverAddr OBJECT-TYPE
+        SYNTAX DisplayString
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The IP address of the manager to send a trap to."
+        ::= { agentConfigTrapsReceiversEntry 2 }
+
+receiverCommunityString OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..31))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The community name to use in the trap when
+                 sent to the manager."
+        ::= { agentConfigTrapsReceiversEntry 3 }
+
+receiverNmsType OBJECT-TYPE
+        SYNTAX  INTEGER {
+                none(1),
+                ats-trap(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The trap group that NMS desired."
+        ::= { agentConfigTrapsReceiversEntry 4 }
+
+receiverSeverityLevel OBJECT-TYPE
+        SYNTAX  INTEGER {
+                informational(1),
+                warning(2),
+                severe(3),
+                event(4)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The severity level of traps to be received by this manager."
+        ::= { agentConfigTrapsReceiversEntry 5 }
+
+receiverDescription OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..31))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Description of trap receivers"
+        ::= { agentConfigTrapsReceiversEntry 6 }
+
+agentConfigIPv6AddrConfig OBJECT-TYPE
+        SYNTAX  INTEGER {
+                                automatic(1),
+                                dhcpv6(2),
+                                manual(3)
+                        }
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                        "The state of IPv6 address configuration. "
+        ::= { agentConfig 20 }
+
+agentConfigIPv6LinkLocalAddr OBJECT-TYPE
+        SYNTAX  DisplayString (SIZE(0..255))
+        ACCESS  read-only
+        STATUS  mandatory
+        DESCRIPTION
+                        "The IPv6 link-local address of SNMP. It is auto-configured based on
+                         MAC address of SNMP."
+        ::= { agentConfig 21 }
+
+agentConfigIPv6GlobalAddr OBJECT-TYPE
+        SYNTAX  DisplayString (SIZE(0..255))
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                        "The IPv6 global/site-local address of SNMP. If change it manually,
+                         the agentConfigIPv6AddrStatus and agentConfigIPv6AddrAutoConfig will
+                         be changed to manual configuration and disabled respectively."
+        ::= { agentConfig 22 }
+
+agentConfigIPv6DefaultRouter OBJECT-TYPE
+        SYNTAX  DisplayString (SIZE(0..255))
+        ACCESS  read-write
+        STATUS  mandatory
+        DESCRIPTION
+                        "The address of IPv6 default router. If change it manually,
+                         the agentConfigIPv6AddrStatus and agentConfigIPv6AddrAutoConfig will
+                         be changed to manual configuration and disabled respectively."
+        ::= { agentConfig 23 }
+		
+agentConfigAccessControlTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF AgentConfigAccessControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "A list of managers which can access ATS with private
+                community string."
+        ::= { agentConfig 24}
+
+agentConfigAccessControlEntry OBJECT-TYPE
+        SYNTAX AgentConfigAccessControlEntry
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "The managers."
+        INDEX  { accessIndex}
+        ::= { agentConfigAccessControlTable 1 }
+
+AgentConfigAccessControlEntry ::=
+        SEQUENCE {
+                accessIndex
+                        INTEGER,
+                accessControlAddr
+                        DisplayString,
+                accessPrefixLength
+                        INTEGER,
+                accessControlMode
+                        INTEGER
+        }
+
+accessIndex OBJECT-TYPE
+        SYNTAX INTEGER (0..65535)
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The index to a access control entry."
+        ::= { agentConfigAccessControlEntry 1 }
+
+accessControlAddr OBJECT-TYPE
+        SYNTAX DisplayString
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The IP address of the manager to access ATS"
+        ::= { agentConfigAccessControlEntry 2 }
+
+accessPrefixLength OBJECT-TYPE
+        SYNTAX INTEGER (0..65535)
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The prefix length to use in the manager when
+                 access ATS"
+        ::= { agentConfigAccessControlEntry 3 }
+
+accessControlMode OBJECT-TYPE
+        SYNTAX  INTEGER {
+                accept (1),
+                reject (2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Access type, accept/reject access type can change parameter
+                 of ATS"
+        ::= { agentConfigAccessControlEntry 4 }
+
+-- ===========================================================================
+--
+-- envMonDevStatus
+--
+--  Emd Status Group.
+--
+-- ===========================================================================
+envMonDevStatusTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF EnvMonDevStatus
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "A list to display status of EMD."
+        ::= { envMonDev 1 }
+
+envMonDevStatus OBJECT-TYPE
+        SYNTAX EnvMonDevStatus
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "A list to display status of EMD."
+        INDEX  { envMonDevStatusIndex }
+        ::= { envMonDevStatusTable 1 }
+
+EnvMonDevStatus ::=
+        SEQUENCE {
+                envMonDevStatusIndex
+                        INTEGER,
+				envMonDevStatusState
+                        INTEGER,
+                envMonDevStatusTemp
+                        INTEGER,
+                envMonDevStatusHumi
+                        INTEGER,
+                envMonDevStatusTempAlarm
+                        INTEGER,
+                envMonDevStatusHumiAlarm
+                        INTEGER,
+                envMonDevStatusAlarm1
+                        INTEGER,
+                envMonDevStatusAlarm2
+                        INTEGER,
+				envMonDevStatusAddress
+                        INTEGER,
+				envMonDevStatusAppVer
+                        DisplayString
+        }
+
+envMonDevStatusIndex OBJECT-TYPE
+        SYNTAX INTEGER (1..8)
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The index to EMD status entry."
+        ::= { envMonDevStatus 1 }
+
+envMonDevStatusState OBJECT-TYPE
+        SYNTAX  INTEGER {
+                unknow(1),
+                disabled(2),
+                emd31(3)                
+                }
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The device state of EMD."
+        ::= { envMonDevStatus 2 }
+	
+envMonDevStatusTemp OBJECT-TYPE
+        SYNTAX INTEGER{
+                invalid(32768)
+                }
+        UNITS  "degC"
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The temperature of EMD."
+        ::= { envMonDevStatus 3 }
+
+envMonDevStatusHumi OBJECT-TYPE
+        SYNTAX INTEGER{
+                invalid(32768)
+                }
+        UNITS  "0.1%"
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The humidity of EMD."
+        ::= { envMonDevStatus 4 }
+
+envMonDevStatusTempAlarm OBJECT-TYPE
+        SYNTAX  INTEGER {
+                normal(1),
+                warning(2),
+                critical(3)                
+                }
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The temperature status of EMD."
+        ::= { envMonDevStatus 5 }
+
+envMonDevStatusHumiAlarm OBJECT-TYPE
+        SYNTAX  INTEGER {
+                normal(1),
+                warning(2),
+                critical(3)                
+                }
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The humidity status of EMD."
+        ::= { envMonDevStatus 6 }
+		
+envMonDevStatusAlarm1 OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                inactive(2),
+                active(3)
+                }
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The alarm-1 status of EMD."
+        ::= { envMonDevStatus 7 }
+
+envMonDevStatusAlarm2 OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                inactive(2),
+                active(3)
+                }
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The alarm-2 status of EMD."
+        ::= { envMonDevStatus 8 }
+		
+envMonDevStatusAddress OBJECT-TYPE
+        SYNTAX INTEGER
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The device modbus address of EMD."
+        ::= { envMonDevStatus 9 }
+
+envMonDevStatusAppVer OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..12))
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "Description of EMD application FW version"
+        ::= { envMonDevStatus 10 }
+-- ===========================================================================
+--
+-- envMonDevCfg
+--
+--  Emd Configuration Group.
+--
+-- ===========================================================================
+envMonDevCfgTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF EnvMonDevCfg
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "A list to display configure of EMD."
+        ::= { envMonDev 2 }
+
+envMonDevCfg OBJECT-TYPE
+        SYNTAX EnvMonDevCfg
+        ACCESS not-accessible
+        STATUS mandatory
+        DESCRIPTION
+                "A list to display configure of EMD."
+        INDEX  { envMonDevCfgIndex}
+        ::= { envMonDevCfgTable 1 }
+
+EnvMonDevCfg ::=
+        SEQUENCE {
+            envMonDevCfgIndex
+                    INTEGER,
+			envMonDevCfgLTClose
+                    INTEGER,
+			envMonDevCfgTempName
+                    DisplayString,
+			envMonDevCfgHumiName
+                    DisplayString,
+			envMonDevCfgAlarm1Name
+                    DisplayString,
+			envMonDevCfgAlarm2Name
+                    DisplayString,
+			envMonDevCfgLocationName
+                    DisplayString,
+			envMonDevCfgTempHighWarningEn
+                    INTEGER,
+			envMonDevCfgTempLowWarningEn
+                    INTEGER,
+			envMonDevCfgTempHighCriticalEn
+                    INTEGER,
+			envMonDevCfgTempLowCriticalEn
+                    INTEGER,
+			envMonDevCfgTempHighWarning
+                    INTEGER,
+			envMonDevCfgTempLowWarning
+                    INTEGER,
+			envMonDevCfgTempHighCritical
+                    INTEGER,
+			envMonDevCfgTempLowCritical
+                    INTEGER,
+			envMonDevCfgTempOffset
+                    INTEGER,
+			envMonDevCfgHumiHighWarningEn
+                    INTEGER,
+			envMonDevCfgHumiLowWarningEn
+                    INTEGER,
+			envMonDevCfgHumiHighCriticalEn
+                    INTEGER,
+			envMonDevCfgHumiLowCriticalEn
+                    INTEGER,
+			envMonDevCfgHumiHighWarning
+                    INTEGER,
+			envMonDevCfgHumiLowWarning
+                    INTEGER,
+			envMonDevCfgHumiHighCritical
+                    INTEGER,
+			envMonDevCfgHumiLowCritical
+                    INTEGER,
+			envMonDevCfgHumiOffset
+                    INTEGER,
+			envMonDevCfgAlarm1Setup
+                    INTEGER,
+			envMonDevCfgAlarm2Setup
+                    INTEGER
+        }
+		
+envMonDevCfgIndex OBJECT-TYPE
+        SYNTAX INTEGER (0..7)
+        ACCESS read-only
+        STATUS mandatory
+        DESCRIPTION
+                "The index to EMD configure entry."
+        ::= { envMonDevCfg 1 }
+		
+envMonDevCfgLTClose OBJECT-TYPE
+        SYNTAX INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The index to EMD LT Close."
+        ::= { envMonDevCfg 2 }
+		
+envMonDevCfgTempName   OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..31))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Description of EMD temperature sensor"
+        ::= { envMonDevCfg 3 }
+		
+envMonDevCfgHumiName   OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..31))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Description of EMD temperature sensor"
+        ::= { envMonDevCfg 4 }
+		
+envMonDevCfgAlarm1Name   OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..31))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Description of EMD alarm-1 name"
+        ::= { envMonDevCfg 5 }
+		
+envMonDevCfgAlarm2Name   OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..31))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Description of EMD alarm-2 name"
+        ::= { envMonDevCfg 6 }
+		
+envMonDevCfgLocationName   OBJECT-TYPE
+        SYNTAX DisplayString (SIZE(0..15))
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "Description of EMD location name"
+        ::= { envMonDevCfg 7 }
+		
+envMonDevCfgTempHighWarningEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable high warning set point check with EMD temperature."
+        ::= { envMonDevCfg 8 }
+
+envMonDevCfgTempLowWarningEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable low warning set point check with EMD temperature."
+        ::= { envMonDevCfg 9 }
+
+envMonDevCfgTempHighCriticalEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable high critical set point check with EMD temperature."
+        ::= { envMonDevCfg 10 }
+
+envMonDevCfgTempLowCriticalEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable low critical set point check with EMD temperature."
+        ::= { envMonDevCfg 11 }
+
+envMonDevCfgTempHighWarning OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "degC"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The high warning threshold of temperature of EMD in 0.1 Celsius/Fahrenheit."
+        ::= { envMonDevCfg 12 }
+
+envMonDevCfgTempLowWarning OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "degC"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The low warning threshold of temperature of EMD in 0.1 Celsius/Fahrenheit."
+        ::= { envMonDevCfg 13 }
+
+envMonDevCfgTempHighCritical OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "degC"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The high critical threshold of temperature of EMD in 0.1 Celsius/Fahrenheit."
+        ::= { envMonDevCfg 14 }
+
+envMonDevCfgTempLowCritical OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "degC"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The low critical threshold of temperature of EMD in 0.1 Celsius/Fahrenheit."
+        ::= { envMonDevCfg 15 }
+
+envMonDevCfgTempOffset OBJECT-TYPE
+        SYNTAX INTEGER {
+		temperatueUnoffset(1),
+        temperatueIncrease0Point5(2),
+        temperatueIncrease1Point0(3),
+        temperatueIncrease1Point5(4),
+        temperatueIncrease2Point0(5),
+        temperatueIncrease2Point5(6),
+        temperatueIncrease3Point0(7),
+        temperatueDecrease0Point5(8),
+        temperatueDecrease1Point0(9),
+        temperatueDecrease1Point5(10),
+        temperatueDecrease2Point0(11),
+        temperatueDecrease2Point5(12),
+        temperatueDecrease3Point0(13)
+        }
+        UNITS  "degC"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The offset index of temperature of EMD."
+        ::= { envMonDevCfg 16 }
+
+envMonDevCfgHumiHighWarningEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable high warning set point check with EMD humidity."
+        ::= { envMonDevCfg 17 }
+
+envMonDevCfgHumiLowWarningEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable low warning set point check with EMD humidity."
+        ::= { envMonDevCfg 18 }
+
+envMonDevCfgHumiHighCriticalEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable high critical set point check with EMD humidity."
+        ::= { envMonDevCfg 19 }
+
+envMonDevCfgHumiLowCriticalEn OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                enabled(2)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "To enable/disable low critical set point check with EMD humidity."
+        ::= { envMonDevCfg 20 }
+
+envMonDevCfgHumiHighWarning OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "0.1%"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The high warning threshold of humidity of EMD in 0.1 %."
+        ::= { envMonDevCfg 21 }
+
+envMonDevCfgHumiLowWarning OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "0.1%"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The low warning threshold of humidity of EMD in 0.1 %."
+        ::= { envMonDevCfg 22 }
+
+envMonDevCfgHumiHighCritical OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "0.1%"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The high critical threshold of humidity of EMD in 0.1 %."
+        ::= { envMonDevCfg 23 }
+
+envMonDevCfgHumiLowCritical OBJECT-TYPE
+        SYNTAX INTEGER
+        UNITS  "0.1%"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The low critical threshold of humidity of EMD in 0.1 %."
+        ::= { envMonDevCfg 24 }
+
+envMonDevCfgHumiOffset OBJECT-TYPE
+        SYNTAX INTEGER {
+		humidityUnoffset(1),
+        humidityIncrease1Point0(2),
+        humidityIncrease2Point0(3),
+        humidityIncrease3Point0(4),
+        humidityIncrease4Point0(5),
+        humidityIncrease5Point0(6),
+        humidityIncrease6Point0(7),
+        humidityDecrease1Point0(8),
+        humidityDecrease2Point0(9),
+        humidityDecrease3Point0(10),
+        humidityDecrease4Point0(11),
+        humidityDecrease5Point0(12),
+        humidityDecrease6Point0(13)
+        }
+        UNITS  "%"
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The offset index of humidity of EMD."
+        ::= { envMonDevCfg 25 }
+
+envMonDevCfgAlarm1Setup OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                no(2),
+				nc(3)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The alarm-1 setup of EMD."
+        ::= { envMonDevCfg 26 }
+
+envMonDevCfgAlarm2Setup OBJECT-TYPE
+        SYNTAX  INTEGER {
+                disabled(1),
+                no(2),
+				nc(3)
+                }
+        ACCESS read-write
+        STATUS mandatory
+        DESCRIPTION
+                "The alarm-2 setup of EMD."
+        ::= { envMonDevCfg 27 }	
+
+-- ===========================================================================
+-- atsTrapGroup
+--
+-- Traps group
+-- ===========================================================================
+
+   -- This section defines the well-known notifications sent by
+   -- ATS agents.
+   -- Care must be taken to insure that no particular notification
+   -- is sent to a single receiving entity more often than once
+   -- every five seconds.
+
+atsAtsAlarm  TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                "WARNING: ATS Alarm."
+        ::= 1
+
+atsSourceAvoltageAbnormal  TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                "WARNING: Source A Voltage Abnormal."
+        ::= 2
+
+atsSourceBvoltageAbnormal TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                "WARNING: Source B Voltage Abnormal."
+        ::= 3
+
+atsSourceAfrequencyAbnormal   TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "WARNING: Source A Frequency Abnormal."
+        ::= 4
+
+atsSourceBfrequencyAbnormal       TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "WARNING: Source B Frequency Abnormal."
+        ::= 5
+
+atsOutputOverLoad    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Output Over Load."
+        ::= 6
+
+atsWorkPowerAabnormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Unit fault (Working power A abnormal)."
+        ::= 7
+
+atsWorkPowerBabnormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Unit fault (Working power B abnormal)."
+        ::= 8
+
+atsOverTemperature    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "WARNING: Cabinet over temperature."
+        ::= 9
+
+atsDcOffsetAbnormal     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Unit fault (Sensor circuit abnormal)."
+        ::= 10
+
+atsEepromAbnormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Unit fault (EEPROM data abnormal)"
+        ::= 11
+
+atsLcdNotConnect    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: LCD panel connection abnormal."
+        ::= 12
+
+atsOutputExceedsOverloadTime    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Overload time out, Output off, Reset needed."
+        ::= 13
+
+atsInputPhaseDifference     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Phase difference between resources exceed user defined value, Output off, Reset needed."
+        ::= 14
+
+atsUserSetOverLoad     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "WARNING: User defined load pre-alarm."
+        ::= 15
+		
+atsCommunicationAbnormal     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "SEVERE: Communication connection abnormal."
+        ::= 16
+		
+atsEpoAlarm     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "WARNING: EPO Alarm."
+        ::= 17
+
+atsAtsAlarmToNormal  TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: ATS Alarm Normal."
+        ::= 18
+
+atsSourceAvoltageAbnormalToNormal  TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Source A Voltage Normal."
+        ::= 19
+
+atsSourceBvoltageAbnormalToNormal TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Source B Voltage Normal."
+        ::= 20
+
+atsSourceAfrequencyAbnormalToNormal   TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Source A Frequency Normal."
+        ::= 21
+
+atsSourceBfrequencyAbnormalToNormal       TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Source B Frequency Normal."
+        ::= 22
+
+atsOutputOverLoadToNormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Output Load Normal."
+        ::= 23
+
+atsWorkPowerAabnormalToNormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Unit Normal (Working power A normal)."
+        ::= 24
+
+atsWorkPowerBabnormalToNormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Unit Normal (Working power B normal)."
+        ::= 25
+
+atsOverTemperatureToNormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Cabinet temperature Normal."
+        ::= 26
+
+atsDcOffsetAbnormalToNormal     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Unit Normal (Sensor circuit normal)."
+        ::= 27
+
+atsEepromAbnormalToNormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Unit Normal (EEPROM data normal)."
+        ::= 28
+
+atsLcdNotConnectToNormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: LCD panel connection normal."
+        ::= 29
+
+atsOutputExceedsOverloadTimeToNormal    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Overload time out Normal."
+        ::= 30
+
+atsInputPhaseDifferenceToNormal     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Input sources return to normal phase."
+        ::= 31
+
+atsUserSetOverLoadToNormal     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: User defined load return to Normal."
+        ::= 32
+		
+atsCommunicationToNormal     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Communication connection normal"
+        ::= 33
+		
+atsEpoToNormal     TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: EPO Alarm Normal"
+        ::= 34
+
+atsCommunicationLost TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                 "SEVERE: Communication to the ATS has been lost."
+        ::= 35
+
+atsCommunicationEstablished TRAP-TYPE
+        ENTERPRISE atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Communication with the ATS has been established."
+        ::= 36
+
+emdmTemperatureNotHighWarn   TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+		envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempHighWarning,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Temperature not over high set warning point."
+        ::= 37
+
+emdmTemperatureTooHighWarn   TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempHighWarning,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "WARNING: EMD Temperature over high set warning point."
+        ::= 38
+
+emdmTemperatureNotLowWarn    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempLowWarning,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Temperature not under low set warning point."
+        ::= 39
+
+emdmTemperatureTooLowWarn    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempLowWarning,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "WARNING: EMD Temperature under low set warning point."
+        ::= 40
+
+emdmTemperatureNotHighCrit   TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempHighCritical,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Temperature not over high set critical point."
+        ::= 41
+
+emdmTemperatureTooHighCrit   TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempHighCritical,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "WARNING: EMD Temperature over high set critical point."
+        ::= 42
+
+emdmTemperatureNotLowCrit    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempLowCritical,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Temperature not under low set critical point."
+        ::= 43
+
+emdmTemperatureTooLowCrit    TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusTemp,
+		envMonDevCfgIndex,
+        envMonDevCfgTempLowCritical,
+        envMonDevCfgTempName
+        }
+        DESCRIPTION
+                "WARNING: EMD Temperature under low set critical point."
+        ::= 44
+
+emdmHumidityNotHighWarn      TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+		envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiHighWarning,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Humidity not over high set warning point."
+        ::= 45
+
+emdmHumidityTooHighWarn      TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiHighWarning,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "WARNING: EMD Humidity over high set warning point."
+        ::= 46
+
+emdmHumidityNotLowWarn       TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiLowWarning,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Humidity not under low set warning point."
+        ::= 47
+
+emdmHumidityTooLowWarn       TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiLowWarning,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "WARNING: EMD Humidity under low set warning point."
+        ::= 48
+		
+emdmHumidityNotHighCrit      TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiHighCritical,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Humidity not over high set critical point."
+        ::= 49
+
+emdmHumidityTooHighCrit      TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiHighCritical,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "WARNING: EMD Humidity over high set critical point."
+        ::= 50
+
+emdmHumidityNotLowCrit       TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiLowCritical,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Humidity not under low set critical point."
+        ::= 51
+
+emdmHumidityTooLowCrit       TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+        envMonDevStatusIndex,
+        envMonDevStatusHumi,
+		envMonDevCfgIndex,
+        envMonDevCfgHumiLowCritical,
+        envMonDevCfgHumiName
+        }
+        DESCRIPTION
+                "WARNING: EMD Humidity under low set critical point."
+        ::= 52
+
+emdmAlarm1Normal TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+		envMonDevCfgIndex,
+        envMonDevCfgAlarm1Setup,
+        envMonDevCfgAlarm1Name
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Alarm-1 not active."
+        ::= 53
+
+emdmAlarm1Active TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+		envMonDevCfgIndex,
+        envMonDevCfgAlarm1Setup,
+        envMonDevCfgAlarm1Name
+        }
+        DESCRIPTION
+                "WARNING: EMD Alarm-1 activated."
+        ::= 54
+
+emdmAlarm2Normal TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+		envMonDevCfgIndex,
+        envMonDevCfgAlarm2Setup,
+        envMonDevCfgAlarm2Name
+        }
+        DESCRIPTION
+                "INFORMATION: EMD Alarm-2 not active."
+        ::= 55
+
+emdmAlarm2Active TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        VARIABLES {
+		envMonDevCfgIndex,
+        envMonDevCfgAlarm2Setup,
+        envMonDevCfgAlarm2Name
+        }
+        DESCRIPTION
+                "WARNING: EMD Alarm-2 activated."
+        ::= 56
+		
+emdmCommunicationSuccess TRAP-TYPE
+        ENTERPRISE       atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: EMD communication succeeded."
+        ::= 57
+		
+emdmCommunicationLose TRAP-TYPE
+        ENTERPRISE       atsTrapGroup
+        DESCRIPTION
+                "WARNING: EMD communication lost."
+        ::= 58
+
+emdLogClear TRAP-TYPE
+        ENTERPRISE       atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: EMD history log cleared."
+        ::= 59
+
+emdmUpdateSuccess TRAP-TYPE
+        ENTERPRISE       atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: EMD Firmware update success."
+        ::= 60
+		
+emdmUpdateFail TRAP-TYPE
+        ENTERPRISE       atsTrapGroup
+        DESCRIPTION
+                "WARNING: EMD Firmware update fail."
+        ::= 61
+
+atsLoadOnSourceA TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: The Load is supplied by Source A."
+        ::= 62
+
+atsLoadOnSourceB TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: The Load is supplied by Source B."
+        ::= 63
+
+atsSourceAPreferred TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Source A set as preferred source."
+        ::= 64
+
+atsSourceBPreferred TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Source B set as preferred source."
+        ::= 65
+
+atsLoadOnBypassA TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: The Load is supplied by Bypass A."
+        ::= 66
+
+atsLoadOnBypassB TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: The Load is supplied by Bypass B."
+        ::= 67
+
+atsLoadOff TRAP-TYPE
+        ENTERPRISE      atsTrapGroup
+        DESCRIPTION
+                "WARNING: The Load disconnected."
+        ::= 68
+		
+atsSendTestTrapEvent TRAP-TYPE
+        ENTERPRISE       atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Send test trap."
+        ::= 69
+		
+atsSendTestMailEvent TRAP-TYPE
+        ENTERPRISE       atsTrapGroup
+        DESCRIPTION
+                "INFORMATION: Send test mail."
+        ::= 70
+   END

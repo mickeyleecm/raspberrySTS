@@ -1,0 +1,59 @@
+================================================================================
+UPS/ATS/i-STS STATUS QUERY
+================================================================================
+Host: 192.168.111.173
+Device Type: ATS
+Timestamp: 2025-12-16T14:23:53.568260
+================================================================================
+
+1. IDENTIFICATION INFORMATION
+--------------------------------------------------------------------------------
+  Model: ATS-232
+  Serial Number: 
+  Manufacturer: ATS-232
+  Firmware Revision: ATS12047
+  Agent Firmware Revision: SNMP Smart II Card v1.08 (SN 11230032204012)
+   Timing: {'extraction_time_seconds': 0.1986, 'snmp_queries_count': 5, 'total_snmp_time_seconds': 0.1986, 'average_snmp_time_seconds': 0.0397}
+
+3. INPUT POWER STATUS
+--------------------------------------------------------------------------------
+  Output Source Priority: ATS Select
+
+  Source A:
+    Status: fail
+    Voltage: 1.3 V
+    Frequency: 0.0 Hz
+    Voltage Range: 19.5 V - 26.4 V
+    Frequency Range: 45.0 Hz - 55.0 Hz
+
+  Source B:
+    Status: ok
+    Voltage: 22.2 V
+    Frequency: 50.0 Hz
+    Voltage Range: 19.5 V - 26.4 V
+    Frequency Range: 45.0 Hz - 55.0 Hz
+
+4. OUTPUT POWER STATUS
+--------------------------------------------------------------------------------
+  Output Source: Source B
+  Output Voltage: 21.9 V
+  Output Frequency: 50.0 Hz
+  Output Current: 0.0%
+  Output Load: 0.0%
+
+5. ATS HMI AND SWITCH SETTINGS
+--------------------------------------------------------------------------------
+  Buzzer Status: Disabled
+  ATS Alarm Status: Alarm Occurred
+  Auto Return: Off
+  Transfer by Load: Off
+  Transfer by Phase: Off
+
+6. ATS MISCELLANEOUS INFORMATION
+--------------------------------------------------------------------------------
+  System Temperature: 3.4 °C
+  System Max Current: 320.0%
+
+================================================================================
+QUERY COMPLETE
+================================================================================
